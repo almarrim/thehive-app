@@ -5,10 +5,11 @@ import { signIn } from '../api'
 import messages from '../messages'
 
 class SignIn extends Component {
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
+      name: '',
       email: '',
       password: ''
     }
@@ -29,12 +30,12 @@ class SignIn extends Component {
       .then(() => history.push('/'))
       .catch(error => {
         console.error(error)
-        this.setState({ email: '', password: '' })
+        this.setState({ name: '', email: '', password: '' })
         alert(messages.signInFailure, 'danger')
       })
   }
 
-  render () {
+  render() {
     const { email, password } = this.state
 
     return (
