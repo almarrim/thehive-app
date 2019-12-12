@@ -10,6 +10,7 @@ import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 import AlertDismissible from './auth/components/AlertDismissible'
 import Test from './test'
+import JobsContainer from '../src/job/components/jobsContainer'
 class App extends Component {
   constructor() {
     super()
@@ -29,8 +30,8 @@ class App extends Component {
     this.setState({ alerts: [...this.state.alerts, { message, type }] })
   }
 
-  render () {
-    const { alerts, user } = this.state
+  render() {
+    const { alerts, user, jobs } = this.state
 
     return (
       <React.Fragment>
@@ -39,6 +40,9 @@ class App extends Component {
           <AlertDismissible key={index} variant={alert.type} message={alert.message} />
         ))}
         <main className="container">
+          <Route exact path='/' render={() => (
+            <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
+          )} />
           <AuthenticatedRoute user={user} path='/test' render={() => (
             <Test alert={this.alert} user={user} setUser={this.setUser} />
           )} />
