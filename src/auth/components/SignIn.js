@@ -9,7 +9,6 @@ class SignIn extends Component {
     super()
 
     this.state = {
-      name: '',
       email: '',
       password: ''
     }
@@ -30,7 +29,7 @@ class SignIn extends Component {
       .then(() => history.push('/'))
       .catch(error => {
         console.error(error)
-        this.setState({ name: '', email: '', password: '' })
+        this.setState({ email: '', password: '' })
         alert(messages.signInFailure, 'danger')
       })
   }
