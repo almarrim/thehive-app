@@ -9,14 +9,15 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 import AlertDismissible from './auth/components/AlertDismissible'
-
+import Test from './test'
 class App extends Component {
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
       user: null,
-      alerts: []
+      alerts: [],
+      jobs: [],
     }
   }
 
@@ -38,6 +39,9 @@ class App extends Component {
           <AlertDismissible key={index} variant={alert.type} message={alert.message} />
         ))}
         <main className="container">
+          <AuthenticatedRoute user={user} path='/test' render={() => (
+            <Test alert={this.alert} user={user} setUser={this.setUser} />
+          )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
