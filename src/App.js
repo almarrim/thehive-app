@@ -41,8 +41,8 @@ class App extends Component {
           <AlertDismissible key={index} variant={alert.type} message={alert.message} />
         ))}
         <main className="container">
-          <Route exact path='/jobs/show' render={() => (
-            <SingleJob alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
+          <Route exact path='/jobs/:id' render={(props) => (
+            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
           )} />
           <Route exact path='/' render={() => (
             <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />

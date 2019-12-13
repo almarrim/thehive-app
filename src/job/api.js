@@ -11,6 +11,7 @@ import apiUrl from '../apiConfig';
 
 
 /**
+ * INDEX
  * Method:      GET
  * URI:         /api/jobs
  * Description: Show all Jobs
@@ -23,6 +24,7 @@ export const showAllJobs = function () {
     return axios.get(`${apiUrl}/api/jobs`);
 }
 /**
+ * SHOW
  * Method:      GET
  * URI:         /api/jobs/:id
  * Description: Show a Job
@@ -48,4 +50,13 @@ export const createNewJob = function (newJob, user) {
             job: newJob
         }
     });
+}
+/**
+ * DELETE
+ * Method:      DELETE
+ * URI:         /api/jobs/:id
+ * Description: Delete a Job
+ */
+export const deleteAJOB = function (id) {
+    return axios.delete(`${apiUrl}/api/jobs/${id}`)
 }

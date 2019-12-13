@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Job from './job'
 import { showAllJobs } from '../api'
-import { BrowserRouter as Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class JobsContainer extends Component {
     constructor(props) {
@@ -17,6 +17,7 @@ export default class JobsContainer extends Component {
     componentDidMount() {
         showAllJobs()
             .then((response) => {
+                console.log(response.data)
                 this.setState({
                     jobs: [...response.data]
                 })
@@ -29,14 +30,14 @@ export default class JobsContainer extends Component {
         let jobs = <h2>No Jobs</h2>
         if (this.state.jobs.length > 0) {
             jobs = this.state.jobs.map((job, index) => {
-                return <Link to='/jobs/show'><Job title={job.title} type={job.type} description={job.description} key={index} /> </Link>
+                console.log("jobs")
+                return <div><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { x: "passed" } }}>JobsPage</Link></div >
             })
         }
         return (
             <div>
                 This is the Container
                 {jobs}
-
             </div>
         )
     }
