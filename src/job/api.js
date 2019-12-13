@@ -22,6 +22,15 @@ export const showAllJobs = function () {
     // })
     return axios.get(`${apiUrl}/api/jobs`);
 }
+/**
+ * Method:      GET
+ * URI:         /api/jobs/:id
+ * Description: Show a Job
+ */
+export const showAJob = function (id) {
+    return axios.get(`${apiUrl}/api/jobs/${id}`)
+}
+
 
 /*API POST request that creates a new job post
 //It takes two params. newJob: Object & user: Object

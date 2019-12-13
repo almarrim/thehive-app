@@ -11,6 +11,7 @@ import ChangePassword from './auth/components/ChangePassword'
 import AlertDismissible from './auth/components/AlertDismissible'
 import Test from './test'
 import JobsContainer from '../src/job/components/jobsContainer'
+import SingleJob from '../src/job/components/singleJob'
 class App extends Component {
   constructor() {
     super()
@@ -40,6 +41,9 @@ class App extends Component {
           <AlertDismissible key={index} variant={alert.type} message={alert.message} />
         ))}
         <main className="container">
+          <Route exact path='/jobs/show' render={() => (
+            <SingleJob alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
+          )} />
           <Route exact path='/' render={() => (
             <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
           )} />
