@@ -18,7 +18,6 @@ class SingleJob extends Component {
                     job: Object.assign({}, response.data),
                     jobID: this.props.match.params.id
                 })
-                console.log("didmount")
             })
             .catch((error) => console.log(error))
     }
@@ -33,17 +32,16 @@ class SingleJob extends Component {
         if (this.state.job) {
             job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={this.state.job._id} />
         }
-        let button;
-        // if (this.props.user) {
-        if (true) {
-
-            // if (this.props.user.id === this.state.job.creator) {
-            if (true) {
+        let button
+        if (this.props.user) {
+            if (this.props.user._id === this.state.job.creator) {
+                console.log(this.props.user.id)
+                console.log(this.state.job.creator)
                 button = <button onClick={(e) => this.handleDelete(e)}>Delete</button>
             }
         }
         return (<div>
-            <h1> This is JobShow</h1>
+            <h1> This is SINGLJOB</h1>
             {job}
             {button}
             {this.props.user ? "inside the if" : "WRONG"}
