@@ -12,8 +12,7 @@ class Test extends Component {
         }
     }
     componentDidMount() {
-        console.log(this.props.user.token)
-
+        console.log(this.props.jobId)
     }
     handleChange = event => {
         console.log(event.target.name, event.target.value)

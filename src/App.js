@@ -13,6 +13,8 @@ import Test from './test'
 import JobsContainer from '../src/job/components/jobsContainer'
 import SingleJob from '../src/job/components/singleJob'
 import JobForm from '../src/job/components/jobForm'
+import BidForm from '../src/bid/components/bidForm'
+
 class App extends Component {
   constructor() {
     super()
@@ -60,10 +62,13 @@ class App extends Component {
             <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
           )} />
           <AuthenticatedRoute user={user} path='/test' render={() => (
-            <Test alert={this.alert} user={user} setUser={this.setUser} />
+            <Test alert={this.alert} user={user} setUser={this.setUser} jobId={this.state.jobId}/>
           )} />
           <AuthenticatedRoute user={user} path='/job-form/:jobId' render={(props) => (
             <JobForm {...props} alert={this.alert} user={user} setUser={this.setUser} job={this.state.job} jobId={this.state.jobId} setJob={this.state.setJob} setJobId={this.setJobId} />
+          )} />
+          <AuthenticatedRoute user={user} path='/bid-form' render={(props) => (
+            <BidForm alert={this.alert} user={user} setUser={this.setUser} job={this.state.job} jobId={this.state.jobId} setJob={this.state.setJob} setJobId={this.setJobId} />
           )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />

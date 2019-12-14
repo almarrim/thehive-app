@@ -58,7 +58,6 @@ export const createNewJob = function (newJob, user) {
  * Description: Update a Job
  */
 export const updateAJOB = function (newJob, user, jobId) {
-    console.log("XXXXXXX",newJob,user,jobId)
     return axios({
         url: `${apiUrl}/api/jobs/${jobId}`,
         method: 'PUT',

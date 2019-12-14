@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { showAJob, deleteAJOB } from '../api'
+import { showAJob, deleteAJOB } from '../api';
 import Job from './job';
-import JobForm from './jobForm'
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 class SingleJob extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +30,10 @@ class SingleJob extends Component {
         event.preventDefault()
         this.props.history.push(`/job-form/${this.props.match.params.id}`)
     }
+    handleBid(event) {
+        event.preventDefault()
+        this.props.history.push(`/bid-form`)
+    }
     render() {
         let job = <h1>Searching...</h1>
         if (this.state.job) {
@@ -45,11 +47,13 @@ class SingleJob extends Component {
                 buttonEdit = <button onClick={(e) => this.handleEdit(e)}>Edit</button>
             }
         }
+        let buttonBid = <button onClick={(e) => this.handleBid(e)}>Bid</button>
         return (<div>
             <h1> This is SINGLJOB</h1>
             {job}
             {buttonDel}
             {buttonEdit}
+            <button onClick={(e) => this.handleBid(e)}>Bid</button>
         </div>);
     }
 }
