@@ -20,6 +20,7 @@ class Test extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+        console.log(this.state.title)
     }
     onCreateJob = (event, user) => {
         event.preventDefault()

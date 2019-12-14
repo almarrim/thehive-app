@@ -12,6 +12,7 @@ import AlertDismissible from './auth/components/AlertDismissible'
 import Test from './test'
 import JobsContainer from '../src/job/components/jobsContainer'
 import SingleJob from '../src/job/components/singleJob'
+import JobForm from '../src/job/components/jobForm'
 class App extends Component {
   constructor() {
     super()
@@ -20,6 +21,8 @@ class App extends Component {
       user: null,
       alerts: [],
       jobs: [],
+      job: {},
+      jobId: 0
     }
   }
 
@@ -30,7 +33,16 @@ class App extends Component {
   alert = (message, type) => {
     this.setState({ alerts: [...this.state.alerts, { message, type }] })
   }
-
+  setJob = (job) => {
+    this.setState({
+      job: Object.assign({}, job),
+    })
+  }
+  setJobId = (jobId) => {
+    this.setState({
+      jobId: jobId
+    })
+  }
   render() {
     const { alerts, user, jobs } = this.state
 
@@ -42,13 +54,16 @@ class App extends Component {
         ))}
         <main className="container">
           <Route exact path='/jobs/:id' render={(props) => (
-            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
+            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} setJob={this.setJob} setJobId={this.setJobId} />
           )} />
           <Route exact path='/' render={() => (
             <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={jobs} />
           )} />
           <AuthenticatedRoute user={user} path='/test' render={() => (
             <Test alert={this.alert} user={user} setUser={this.setUser} />
+          )} />
+          <AuthenticatedRoute user={user} path='/job-form/:jobId' render={(props) => (
+            <JobForm {...props} alert={this.alert} user={user} setUser={this.setUser} job={this.state.job} jobId={this.state.jobId} setJob={this.state.setJob} setJobId={this.setJobId} />
           )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
