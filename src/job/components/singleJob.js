@@ -11,15 +11,20 @@ class SingleJob extends Component {
     }
     componentDidMount() {
         this.props.setJobId(this.props.match.params.id)
-        showAJob(this.props.match.params.id)
-            .then((response) => {
-                this.setState({
-                    job: Object.assign({}, response.data),
-                    jobId: this.props.match.params.id
-                });
-                this.props.setJob(response.data)
-            })
-            .catch((error) => console.log(error))
+        const job=this.props.jobs.find(job => job._id===this.props.match.params.id)
+        console.log(job)
+        this.setState({
+            job:Object.assign({}, job)
+        })
+        // showAJob(this.props.match.params.id)
+        //     .then((response) => {
+        //         this.setState({
+        //             job: Object.assign({}, response.data),
+        //             jobId: this.props.match.params.id
+        //         });
+        //         this.props.setJob(response.data)
+        //     })
+        //     .catch((error) => console.log(error))
     }
     handleDelete(event) {
         event.preventDefault()
@@ -35,9 +40,9 @@ class SingleJob extends Component {
         this.props.history.push(`/bid-form`)
     }
     render() {
-        let job = <h1>Searching...</h1>
+        let job = <h1>soon</h1>
         if (this.state.job) {
-            job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={this.state.job._id} />
+             job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={job._id} />
         }
         let buttonDel
         let buttonEdit

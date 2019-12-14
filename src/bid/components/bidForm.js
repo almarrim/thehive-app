@@ -34,7 +34,7 @@ class BidForm extends Component {
             createNewBid(newBid, user)
                 .then((response) => {
                     console.log("in the create response", response)
-                    this.props.history.push(`/bids/${response.data.bid._id}`)
+                    this.props.history.push(`/bid/${response.data.bid._id}`)
                 })
                 .catch((error) => console.log(error))
         }

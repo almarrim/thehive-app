@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createNewJob, updateAJOB } from '../api';
+import { createNewJob, updateAJOB, showAJob } from '../api';
 class JobForm extends Component {
     constructor(props) {
         super(props);
@@ -14,15 +14,16 @@ class JobForm extends Component {
         }
     }
     componentDidMount() {
-        this.setState({
-            jobId: this.props.match.params.jobId
-        })
         if (this.props.match.params.jobId != 0) {
+            const job=this.props.jobs.find(job=>job._id===this.props.match.params.jobId)
             this.setState({
-                job: Object.assign({}, this.props.job),
+                job: Object.assign({},job),
                 create: false
             })
         }
+        this.setState({
+            jobId: this.props.match.params.jobId
+        })
     }
     handleChange(event) {
         let job = { ...this.state.job }
@@ -36,6 +37,11 @@ class JobForm extends Component {
         if (this.props.match.params.jobId != 0) {
             updateAJOB(this.state.job, user, this.props.match.params.jobId)
                 .then((response) => {
+                    let jobs = [...this.props.jobs]
+                    const jobIndex = jobs.findIndex(job=> job._id===this.props.match.params.jobId)
+                    console.log("in job update", jobs[jobIndex],this.state.job)
+                    jobs[jobIndex]=this.state.job
+                    this.props.setJobs(jobs)
                     this.props.history.push(`/jobs/${this.props.match.params.jobId}`)
                 })
                 .catch((error) => console.log(error))
