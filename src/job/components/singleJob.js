@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { showAJob, deleteAJOB } from '../api';
+// import { showAJob, deleteAJob } from '../api';
 import Job from './job';
 class SingleJob extends Component {
     constructor(props) {
@@ -11,10 +11,10 @@ class SingleJob extends Component {
     }
     componentDidMount() {
         this.props.setJobId(this.props.match.params.id)
-        const job=this.props.jobs.find(job => job._id===this.props.match.params.id)
+        const job = this.props.jobs.find(job => job._id === this.props.match.params.id)
         console.log(job)
         this.setState({
-            job:Object.assign({}, job)
+            job: Object.assign({}, job)
         })
         // showAJob(this.props.match.params.id)
         //     .then((response) => {
@@ -28,8 +28,9 @@ class SingleJob extends Component {
     }
     handleDelete(event) {
         event.preventDefault()
-        deleteAJOB(this.props.match.params.id)
-        this.props.history.push('/')
+        this.props.handleDeleteAJob(this.props.match.params.id,this.props.history)
+        // deleteAJOB(this.props.match.params.id)
+        // this.props.history.push('/')
     }
     handleEdit(event) {
         event.preventDefault()
@@ -42,7 +43,7 @@ class SingleJob extends Component {
     render() {
         let job = <h1>soon</h1>
         if (this.state.job) {
-             job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={job._id} />
+            job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={job._id} />
         }
         let buttonDel
         let buttonEdit

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createNewJob, updateAJOB, showAJob } from '../api';
+// import { createNewJob, updateAJob } from '../api';
 class JobForm extends Component {
     constructor(props) {
         super(props);
@@ -15,9 +15,9 @@ class JobForm extends Component {
     }
     componentDidMount() {
         if (this.props.match.params.jobId != 0) {
-            const job=this.props.jobs.find(job=>job._id===this.props.match.params.jobId)
+            const job = this.props.jobs.find(job => job._id === this.props.match.params.jobId)
             this.setState({
-                job: Object.assign({},job),
+                job: Object.assign({}, job),
                 create: false
             })
         }
@@ -34,25 +34,28 @@ class JobForm extends Component {
     }
     handleSubmit(event, user) {
         event.preventDefault()
-        if (this.props.match.params.jobId != 0) {
-            updateAJOB(this.state.job, user, this.props.match.params.jobId)
-                .then((response) => {
-                    let jobs = [...this.props.jobs]
-                    const jobIndex = jobs.findIndex(job=> job._id===this.props.match.params.jobId)
-                    console.log("in job update", jobs[jobIndex],this.state.job)
-                    jobs[jobIndex]=this.state.job
-                    this.props.setJobs(jobs)
-                    this.props.history.push(`/jobs/${this.props.match.params.jobId}`)
-                })
-                .catch((error) => console.log(error))
-        }
-        else {
-            createNewJob(this.state.job, user)
-                .then((response) => {
-                    this.props.history.push(`/jobs/${response.data.job._id}`)
-                })
-                .catch((error) => console.log(error))
-        }
+        this.props.jobFormSubmit(event,user,this.props.match.params.jobId, this.state.job, this.props.history)
+        // if (this.props.match.params.jobId != 0) {
+        //     updateAJOB(this.state.job, user, this.props.match.params.jobId)
+        //         .then((response) => {
+        //             let jobs = [...this.props.jobs]
+        //             const jobIndex = jobs.findIndex(job => job._id === this.props.match.params.jobId)
+        //             jobs[jobIndex] = this.state.job
+        //             this.props.setJobs(jobs)
+        //             this.props.history.push(`/jobs/${this.props.match.params.jobId}`)
+        //         })
+        //         .catch((error) => console.log(error))
+        // }
+        // else {
+        //     createNewJob(this.state.job, user)
+        //         .then((response) => {
+        //             const jobs = [...this.props.jobs]
+        //             jobs.push(response.data.job)
+        //             this.props.setJobs(jobs)
+        //             this.props.history.push(`/jobs/${response.data.job._id}`)
+        //         })
+        //         .catch((error) => console.log(error))
+        // }
 
     }
     render() {

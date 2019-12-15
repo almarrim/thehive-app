@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Job from './job'
-import { showAllJobs } from '../api'
+// import { showAllJobs } from '../api'
 import { Link } from 'react-router-dom';
 
 export default class JobsContainer extends Component {
@@ -8,8 +8,6 @@ export default class JobsContainer extends Component {
         super();
         this.state = {
         }
-    }
-    componentDidMount() {
     }
     render() {
         let jobs = <h2>No Jobs</h2>

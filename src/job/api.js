@@ -57,7 +57,7 @@ export const createNewJob = function (newJob, user) {
  * URI:         /api/jobs/:id
  * Description: Update a Job
  */
-export const updateAJOB = function (newJob, user, jobId) {
+export const updateAJob = function (newJob, user, jobId) {
     return axios({
         url: `${apiUrl}/api/jobs/${jobId}`,
         method: 'PUT',
@@ -74,6 +74,13 @@ export const updateAJOB = function (newJob, user, jobId) {
  * URI:         /api/jobs/:id
  * Description: Delete a Job
  */
-export const deleteAJOB = function (id) {
-    return axios.delete(`${apiUrl}/api/jobs/${id}`)
+export const deleteAJob = function (user, jobId) {
+    // return axios.delete(`${apiUrl}/api/jobs/${id}`)
+    return axios({
+        url: `${apiUrl}/api/jobs/${jobId}`,
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${user.token}`
+        }
+    });
 }
