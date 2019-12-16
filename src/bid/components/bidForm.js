@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createNewBid } from '../api';
+import { withRouter } from 'react-router-dom'
 class BidForm extends Component {
     constructor(props) {
         super(props);
@@ -8,7 +9,7 @@ class BidForm extends Component {
                 value: 0,
                 content: "",
             },
-            jobId:0,
+            jobId: 0,
         }
     }
     componentDidMount() {
@@ -23,25 +24,25 @@ class BidForm extends Component {
             bid: { ...bid }
         })
     }
-    handleSubmit(event, user) {
+    handleBidSubmit(event, user) {
         event.preventDefault()
         const { value, content } = this.state.bid
-        const newBid={
+        const newBid = {
             value: value,
             content: content,
             jobId: this.props.jobId,
         }
-            createNewBid(newBid, user)
-                .then((response) => {
-                    console.log("in the create response", response)
-                    this.props.history.push(`/bid/${response.data.bid._id}`)
-                })
-                .catch((error) => console.log(error))
-        }
+        this.props.bidSubmit(newBid, this.props.history)
+            // .then((response) => {
+            //     console.log("in the create response", response)
+            //     this.props.history.push(`/jobs/${response.data.bid.jobId}`)
+            // })
+            // .catch((error) => console.log(error))
+    }
     render() {
         const { value, content } = this.state.bid
         return (
-            <form onSubmit={(event) => this.handleSubmit(event, this.props.user)}>
+            <form onSubmit={(event) => this.handleBidSubmit(event)}>
                 <h2>Create Bid</h2>
                 <label>Value</label>
                 <input required name="value" value={value} type="value" placeholder="Title" onChange={(e) => this.handleChange(e)} />
@@ -53,4 +54,4 @@ class BidForm extends Component {
     }
 }
 
-export default BidForm;
+export default withRouter(BidForm);
