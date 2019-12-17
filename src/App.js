@@ -28,6 +28,7 @@ class App extends Component {
     super()
     this.deleteBid = this.deleteBid.bind(this)
     this.bidSubmit = this.bidSubmit.bind(this)
+    this.jobStatus = this.jobStatus.bind(this)
     this.state = {
       user: null,
       alerts: [],
@@ -82,6 +83,22 @@ class App extends Component {
       jobId: jobId
     })
   }
+  jobStatus=(jobId, status)=>{
+    const job = {
+      status: status
+    }
+    updateAJob(job, this.state.user, jobId)
+    .then((response) => {
+      let jobs = [...this.state.jobs]
+      const jobIndex = jobs.findIndex(job => job._id === jobId)
+      jobs[jobIndex].status = job.status
+      this.setState({
+        jobs:[...jobs]
+      })
+    })
+    .catch((error) => console.log(error))
+  }
+
   setBidId = (bidId) => {
     this.setState({
       bidId: bidId
@@ -185,7 +202,7 @@ class App extends Component {
         ))}
         <main className="container">
           <Route exact path='/jobs/:id' render={(props) => (
-            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} setJobs={this.setJobs} setJobId={this.setJobId} handleDeleteAJob={this.handleDeleteAJob} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} setRequester={this.setRequester} />
+            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} setJobs={this.setJobs} setJobId={this.setJobId} handleDeleteAJob={this.handleDeleteAJob} jobStatus={this.jobStatus} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} setRequester={this.setRequester} />
           )} />
           <Route exact path='/' render={() => (
             <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} />

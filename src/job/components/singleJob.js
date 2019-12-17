@@ -51,6 +51,13 @@ class SingleJob extends Component {
         // deleteAJOB(this.props.match.params.id)
         // this.props.history.push('/')
     }
+    handleJobStatus=(e)=>{
+        e.preventDefault()
+        this.props.jobStatus(this.state.job._id, 2)
+        this.setState({
+            status:2
+        })
+    }
     handleEdit(event) {
         event.preventDefault()
         this.props.history.push(`/job-form/${this.props.match.params.id}`)
@@ -68,6 +75,7 @@ class SingleJob extends Component {
         let currentBids = [];
         let job = <h1>soon</h1>
         let status
+        console.log(this.state.job.status)
         if(this.state.status==2){
             status= "Canceled"
         } else if (this.state.status==1){
@@ -82,6 +90,7 @@ class SingleJob extends Component {
         let viewBids
         let bidsCount = ""
         let bidResponse
+        let canceleButton
         if (this.props.user) {
             console.log(this.props.user)
             if (this.props.user._id === this.state.job.creator) {
@@ -108,7 +117,10 @@ class SingleJob extends Component {
                     > ViewBids</Link ></div>}else {
                         bidResponse = <h4> No Bids</h4>
                     }
-                } 
+                }
+                if(this.state.status!=2){
+                    canceleButton = <button onClick={(e) => this.handleJobStatus(e)}>Cancel Job</button>
+                }
             } else {
                 const jobBids= this.props.bids.filter(bid => bid.jobId==this.state.job._id)
                 const myBid= jobBids.filter(bid => bid.bidder==this.props.user._id)
@@ -146,6 +158,7 @@ class SingleJob extends Component {
             {/* {buttonEdit} */}
             {jobStats}
             {/* {viewBids} */}
+            {canceleButton}
         </div >);
     }
 }
