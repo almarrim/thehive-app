@@ -13,13 +13,15 @@ import Test from './test'
 //job related imports
 import { createNewJob, updateAJob, showAllJobs, deleteAJob } from './job/api'
 import JobsContainer from '../src/job/components/jobsContainer'
+import MyJobs from './job/components/myJobs'
 import SingleJob from '../src/job/components/singleJob'
 import JobForm from '../src/job/components/jobForm'
 //bid related imports
 import BidForm from '../src/bid/components/bidForm'
-import SingleBid from '../src/bid/components/singleBid'
+import MyBids from './bid/components/myBids'
 import JobBids from './bid/components/jobBids'
-import { createNewBid, getAllBids, deleteABid } from './bid/api'
+import SingleBid from './bid/components/singleBid'
+import { createNewBid, getAllBids, deleteABid, updateBid } from './bid/api'
 
 class App extends Component {
   constructor() {
@@ -34,10 +36,12 @@ class App extends Component {
       bids: [],
       jobId: 0,
       bidId: 0,
-      requester: "Owner"
+      ownBids: [],
+      requester: "Owner",
     }
   }
   componentDidMount() {
+    console.log("didmount")
     showAllJobs()
       .then((response) => {
         this.setState({
@@ -50,8 +54,13 @@ class App extends Component {
     getAllBids()
       .then(response => {
         console.log(response.data)
+        // let ownBids = []
+        // if (this.state.user) {
+        //   ownBids = response.data.filter(bid => bid.bidder == this.state.user._id)
+        // }
         this.setState({
-          bids: [...response.data]
+          bids: [...response.data],
+          // ownBids: [...ownBids]
         })
       })
       .catch(error => console.log(error))
@@ -78,15 +87,15 @@ class App extends Component {
       bidId: bidId
     })
   }
-  jobFormSubmit = (user, param, job, history) => {
-    if (param != 0) {
-      updateAJob(job, user, param)
+  jobFormSubmit = (user, jobId, job, history) => {
+    if (jobId != 0) {
+      updateAJob(job, user, jobId)
         .then((response) => {
           let jobs = [...this.state.jobs]
-          const jobIndex = jobs.findIndex(job => job._id === param)
+          const jobIndex = jobs.findIndex(job => job._id === jobId)
           jobs[jobIndex] = job
           this.setJobs(jobs)
-          history.push(`/jobs/${param}`)
+          history.push(`/jobs/${jobId}`)
         })
         .catch((error) => console.log(error))
     }
@@ -108,41 +117,62 @@ class App extends Component {
         console.log(response)
         const jobs = [...this.state.jobs]
         const jobIndex = jobs.findIndex(job => job._id === jobId)
+        const bids = this.state.bids.filter(bid=> bid.jobId== jobId)
+        console.log(bids)
         jobs.splice(jobIndex, 1)
         this.setJobs(jobs)
         history.push('/')
       })
       .catch(error => console.log(error))
   }
-  deleteBid(bidId, history) {
+  deleteBid = (bidId, history)=>{
     deleteABid(this.state.user, bidId)
       .then((response) => {
         console.log(response)
         const bids = [...this.state.bids]
         const bidIndex = bids.findIndex(bid => bid._id === bidId)
+        const jobId= bids[bidIndex].jobId
         bids.splice(bidIndex, 1)
-        this.setJobs(bids)
-        history.push(`/jobs/${bids[bidIndex].jobId}`)
+        this.setState({
+          bids:[...bids]
+        })
+        console.log("after the state", jobId)
+        history.push(`/jobs/${jobId}`)
       })
       .catch(error => console.log(error))
   }
-  bidSubmit(bid) {
+  bidSubmit(bid, history) {
     createNewBid(bid, this.state.user)
-        .then((response) => {
-          const bids = [...this.state.bids]
-          bids.push(response.data.bid)
-          this.setState({
-            bids:[...bids]
-          })
-            console.log("in the create response", response)
-            this.props.history.push(`/jobs/${response.data.bid.jobId}`)
+      .then((response) => {
+        const bids = [...this.state.bids]
+        bids.push(response.data.bid)
+        this.setState({
+          bids: [...bids]
         })
-        .catch((error) => console.log(error))
-}
+        console.log("in the create response", response)
+        history.push(`/jobs/${response.data.bid.jobId}`)
+      })
+      .catch((error) => console.log(error))
+  }
   setRequester = (requester) => {
     this.setState({
       requester: requester
     })
+  }
+  bidStatus=(status, bidId)=>{
+    const bid={
+      status:status
+    }
+    updateBid(bid,this.state.user, bidId)
+    .then(()=>{
+      const bids = [...this.state.bids]
+      const bidIndex = this.state.bids.findIndex(bid=>bid._id==bidId);
+      bids[bidIndex].status= status
+      this.setState({
+        bids:[...bids]
+      })
+    })
+    .catch(error=>console.log(error))
   }
   render() {
     const { alerts, user, jobs } = this.state
@@ -155,10 +185,13 @@ class App extends Component {
         ))}
         <main className="container">
           <Route exact path='/jobs/:id' render={(props) => (
-            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} setJobs={this.setJobs} setJobId={this.setJobId} handleDeleteAJob={this.handleDeleteAJob} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid}  setRequester={this.setRequester}  />
+            <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} setJobs={this.setJobs} setJobId={this.setJobId} handleDeleteAJob={this.handleDeleteAJob} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} setRequester={this.setRequester} />
           )} />
           <Route exact path='/' render={() => (
             <JobsContainer alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} />
+          )} />
+          <AuthenticatedRoute exact user={user} path='/own-jobs' render={() => (
+            <MyJobs alert={this.alert} user={user} setUser={this.setUser} jobId={this.state.jobId} jobs={jobs} handleDeleteAJob={this.handleDeleteAJob} />
           )} />
           <AuthenticatedRoute user={user} path='/test' render={() => (
             <Test alert={this.alert} user={user} setUser={this.setUser} jobId={this.state.jobId} />
@@ -166,20 +199,27 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/job-form/:jobId' render={(props) => (
             <JobForm {...props} alert={this.alert} user={user} setUser={this.setUser} job={this.state.job} jobs={this.state.jobs} jobId={this.state.jobId} setJobs={this.setJobs} setJobId={this.setJobId} jobFormSubmit={this.jobFormSubmit} />
           )} />
+          {/* BIDS ROUTES */}
           <AuthenticatedRoute user={user} path='/bid-form' render={(props) => (
-            <BidForm alert={this.alert} user={user} jobId={this.state.jobId} setJobs={this.setJobs} bidSubmit={this.bidSubmit}/>
+            <BidForm alert={this.alert} user={user} jobId={this.state.jobId} setJobs={this.setJobs} bidSubmit={this.bidSubmit} />
           )} />
-          <AuthenticatedRoute user={user} path='/bid' render={(props) => (
+          {/* <AuthenticatedRoute user={user} path='/bid' render={(props) => (
             <SingleBid alert={this.alert} user={user} jobId={this.state.jobId} bidId={this.state.bidId} setBidId={this.setBidId} deleteBid={this.deleteBid} setRequester={this.setRequester} />
-          )} />
+          )} /> */}
           <Route user={user} path='/job-bids' render={(props) => (
-            <JobBids {...props} alert={this.alert} user={user} jobId={this.state.jobId} setBidId={this.setBidId} requester={this.state.requester} setRequester={this.setRequester} />
+            <JobBids {...props} alert={this.alert} user={user} jobId={this.state.jobId} setBidId={this.setBidId} deleteBid={this.deleteBid} bids={this.state.bids} requester={this.state.requester} setRequester={this.setRequester} />
+          )} />
+            <AuthenticatedRoute user={user} path='/own-bids' render={(props) => (
+            <MyBids {...props} alert={this.alert} user={user} jobId={this.state.jobId} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} setRequester={this.setRequester} />
+          )} />
+            <AuthenticatedRoute user={user} path='/single-bid/:bidId' render={(props) => (
+            <SingleBid {...props} alert={this.alert} user={user} jobId={this.state.jobId}  jobs={this.state.jobs} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} bidStatus={this.bidStatus} bidId={this.state.bidId} setRequester={this.setRequester} />
           )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
           <Route path='/sign-in' render={() => (
-            <SignIn alert={this.alert} setUser={this.setUser} />
+            <SignIn alert={this.alert} setUser={this.setUser} jobs={this.state.jobs} bids={this.state.bids} deleteBid={this.deleteBid}/>
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />

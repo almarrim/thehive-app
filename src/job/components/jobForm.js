@@ -34,7 +34,7 @@ class JobForm extends Component {
     }
     handleSubmit(event, user) {
         event.preventDefault()
-        this.props.jobFormSubmit(event,user,this.props.match.params.jobId, this.state.job, this.props.history)
+        this.props.jobFormSubmit( user, this.props.match.params.jobId, this.state.job, this.props.history)
         // if (this.props.match.params.jobId != 0) {
         //     updateAJOB(this.state.job, user, this.props.match.params.jobId)
         //         .then((response) => {
@@ -61,16 +61,19 @@ class JobForm extends Component {
     render() {
         const { title, type, description } = this.state.job
         return (
-            <form onSubmit={(event) => this.handleSubmit(event, this.props.user)}>
-                <h2>Create Job</h2>
-                <label>Title</label>
-                <input required name="title" value={title} type="title" placeholder="Title" onChange={(e) => this.handleChange(e)} />
-                <label>Type</label>
-                <input required name="type" value={type} type="type" placeholder="Type" onChange={(e) => this.handleChange(e)} />
-                <label>description</label>
-                <input required name="description" value={description} type="description" placeholder="Description" onChange={(e) => this.handleChange(e)} />
-                <button type="submit">Submit</button>
-            </form>
+            <div>
+                <button onClick={this.props.history.goBack}>Back</button>
+                <form onSubmit={(event) => this.handleSubmit(event, this.props.user)}>
+                    <h2>Create Job</h2>
+                    <label>Title</label>
+                    <input required name="title" value={title} type="title" placeholder="Title" onChange={(e) => this.handleChange(e)} />
+                    <label>Type</label>
+                    <input required name="type" value={type} type="type" placeholder="Type" onChange={(e) => this.handleChange(e)} />
+                    <label>description</label>
+                    <input required name="description" value={description} type="description" placeholder="Description" onChange={(e) => this.handleChange(e)} />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         );
     }
 }

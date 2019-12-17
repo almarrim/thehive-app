@@ -60,40 +60,64 @@ class SingleJob extends Component {
     //     this.props.removeBid(this.props.bidId)
     // }
     render() {
-        let bids = <h2>bids not</h2>
-        let jobBids;
-        if (this.props.bids.length > 0) {
-            jobBids = this.props.bids.filter(bid => bid.jobId === this.state.job._id)
-            bids = jobBids.map((bid, index) => {
-                return <Bid value={bid.value} content={bid.content} bidId={bid._id} deleteBid={this.props.deleteBid} user={this.props.user} key={index} />
-            })
-        }
+        let currentBids = [];
         let job = <h1>soon</h1>
         if (this.state.job) {
             job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={job._id} />
         }
-        let buttonDel
-        let buttonEdit
+        let buttons
+        let viewBids
         if (this.props.user) {
             if (this.props.user._id === this.state.job.creator) {
-                buttonDel = <button onClick={(e) => this.handleDelete(e)}>Delete</button>;
-                buttonEdit = <button onClick={(e) => this.handleEdit(e)}>Edit</button>
+                buttons = <div><button onClick={(e) => this.handleDelete(e)}>Delete</button><button onClick={(e) => this.handleEdit(e)}>Edit</button></div>;
+                // buttonEdit = <button onClick={(e) => this.handleEdit(e)}>Edit</button>;
+                if (this.props.bids.length > 0) {
+                    currentBids = this.props.bids.filter(bid => bid.jobId === this.state.job._id)
+                    // bids = jobBids.map((bid, index) => {
+                    //     return <Bid value={bid.value} content={bid.content} bidId={bid._id} deleteBid={this.props.deleteBid} user={this.props.user} key={index} />
+                    // })
+                }
+                viewBids = <div><h4>Bids: {currentBids.length}</h4>   < Link to="/job-bids"
+                // {{
+                //     pathname: `/job-bids`,
+                //     state: {
+                //         bids: currentBids,
+                //     }
+                // }
+                // }
+                > ViewBids</Link ></div>
+            } else {
+                let bidsCount = "";
+                if (this.props.bids.length < 6) {
+                    bidsCount = "0-5"
+                } else if (this.props.bids.length < 11) {
+                    bidsCount = "6-10"
+                } else {
+                    bidsCount = "10<"
+                }
+                let bidResponse
+                const jobBids= this.props.bids.filter(bid => bid.jobId==this.state.job._id)
+                const myBid= jobBids.filter(bid => bid.bidder==this.props.user._id)
+                console.log(this.props.bids,this.state.job )
+                if(myBid.length){
+                    console.log("inmybids", myBid)
+                    bidResponse = <Link to={`/single-bid/${myBid[0]._id}`}> View Bid</Link>
+                } else {
+                    console.log("inelse", myBid)
+                    bidResponse =  <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
+                }
+
+            viewBids = <div> <h5>Proposals: {bidsCount}</h5>{bidResponse} KKK</div>
             }
         }
         return (<div>
             <h1> This is SINGLJOB</h1>
+            <button onClick={this.props.history.goBack}>Back</button>
             {job}
-            {buttonDel}
-            {buttonEdit} 
-            <button onClick={(e) => this.handleBid(e)}>Bid</button>
-            <Link to={{
-                pathname:`/job-bids`,
-                state:{
-                    bids: jobBids,
-                }
-                }}>ViewBids</Link>
-            {bids}
-        </div>);
+            {buttons}
+            {/* {buttonEdit} */}
+            {viewBids}
+        </div >);
     }
 }
 

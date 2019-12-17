@@ -33,23 +33,26 @@ class BidForm extends Component {
             jobId: this.props.jobId,
         }
         this.props.bidSubmit(newBid, this.props.history)
-            // .then((response) => {
-            //     console.log("in the create response", response)
-            //     this.props.history.push(`/jobs/${response.data.bid.jobId}`)
-            // })
-            // .catch((error) => console.log(error))
+        // .then((response) => {
+        //     console.log("in the create response", response)
+        //     this.props.history.push(`/jobs/${response.data.bid.jobId}`)
+        // })
+        // .catch((error) => console.log(error))
     }
     render() {
         const { value, content } = this.state.bid
         return (
-            <form onSubmit={(event) => this.handleBidSubmit(event)}>
-                <h2>Create Bid</h2>
-                <label>Value</label>
-                <input required name="value" value={value} type="value" placeholder="Title" onChange={(e) => this.handleChange(e)} />
-                <label>Content</label>
-                <input required name="content" value={content} type="content" placeholder="Content" onChange={(e) => this.handleChange(e)} />
-                <button type="submit">Submit</button>
-            </form>
+            <div>
+                <button onClick={this.props.history.goBack}>Back</button>
+                <form onSubmit={(event) => this.handleBidSubmit(event)}>
+                    <h2>Create Bid</h2>
+                    <label>Value</label>
+                    <input required name="value" value={value} type="value" placeholder="Title" onChange={(e) => this.handleChange(e)} />
+                    <label>Content</label>
+                    <input required name="content" value={content} type="content" placeholder="Content" onChange={(e) => this.handleChange(e)} />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
         );
     }
 }

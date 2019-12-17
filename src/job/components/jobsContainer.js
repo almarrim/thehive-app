@@ -12,9 +12,16 @@ export default class JobsContainer extends Component {
     render() {
         let jobs = <h2>No Jobs</h2>
         if (this.props.jobs.length > 0) {
-            jobs = this.props.jobs.map((job, index) => {
-                return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
-            })
+            if(this.props.user){
+                const notJobs= this.props.jobs.filter(job=>job.creator!=this.props.user._id)
+                jobs = notJobs.map((job, index) => {
+                    return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
+                })
+            }else {
+                jobs = this.props.jobs.map((job, index) => {
+                    return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
+                })
+            }
         }
         return (
             <div>
