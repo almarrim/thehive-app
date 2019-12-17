@@ -67,6 +67,8 @@ class SingleJob extends Component {
         }
         let buttons
         let viewBids
+        let bidsCount = ""
+        let bidResponse = <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
         if (this.props.user) {
             if (this.props.user._id === this.state.job.creator) {
                 buttons = <div><button onClick={(e) => this.handleDelete(e)}>Delete</button><button onClick={(e) => this.handleEdit(e)}>Edit</button></div>;
@@ -87,29 +89,34 @@ class SingleJob extends Component {
                 // }
                 > ViewBids</Link ></div>
             } else {
-                let bidsCount = "";
-                if (this.props.bids.length < 6) {
-                    bidsCount = "0-5"
-                } else if (this.props.bids.length < 11) {
-                    bidsCount = "6-10"
-                } else {
-                    bidsCount = "10<"
-                }
-                let bidResponse
                 const jobBids= this.props.bids.filter(bid => bid.jobId==this.state.job._id)
                 const myBid= jobBids.filter(bid => bid.bidder==this.props.user._id)
                 console.log(this.props.bids,this.state.job )
                 if(myBid.length){
                     console.log("inmybids", myBid)
-                    bidResponse = <Link to={`/single-bid/${myBid[0]._id}`}> View Bid</Link>
-                } else {
-                    console.log("inelse", myBid)
-                    bidResponse =  <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
-                }
-
-            viewBids = <div> <h5>Proposals: {bidsCount}</h5>{bidResponse} KKK</div>
+                    bidResponse = <Link to={`/single-bid/${myBid[0]._id}`}> View Your Bid</Link>
+                } 
+                // else {
+                //     console.log("inelse", myBid)
+                //     bidResponse =  <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
+                // }
             }
         }
+        if (this.props.bids.length < 6) {
+            bidsCount = "0-5"
+        } else if (this.props.bids.length < 11) {
+            bidsCount = "6-10"
+        } else {
+            bidsCount = "10<"
+        }
+                const openBids = this.props.bids.filter(bid=> bid.status==1)
+                const closeBids = this.props.bids.filter(bid=> bid.status==2)
+            viewBids = <div>
+                 <h5>Proposals: {bidsCount}</h5>
+                 <h5>Open Negotiations: {openBids.length}</h5>
+                 <h5>Closed Bids: {closeBids.length}</h5>
+                 {bidResponse}
+                 </div>
         return (<div>
             <h1> This is SINGLJOB</h1>
             <button onClick={this.props.history.goBack}>Back</button>
