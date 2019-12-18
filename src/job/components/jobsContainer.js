@@ -15,16 +15,16 @@ export default class JobsContainer extends Component {
             if(this.props.user){
                 const notJobs= this.props.jobs.filter(job=>job.creator!=this.props.user._id)
                 jobs = notJobs.map((job, index) => {
-                    return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
+                    return <div className="Job-Item" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
                 })
             }else {
                 jobs = this.props.jobs.map((job, index) => {
-                    return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
+                    return <div className="Job-Item" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
                 })
             }
         }
         return (
-            <div>
+            <div id="theBest" className="Job-Container">
                 This is the Container
                 {jobs}
             </div>

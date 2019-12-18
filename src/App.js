@@ -29,6 +29,7 @@ class App extends Component {
     this.deleteBid = this.deleteBid.bind(this)
     this.bidSubmit = this.bidSubmit.bind(this)
     this.jobStatus = this.jobStatus.bind(this)
+    this.changeBurger= this.changeBurger.bind(this)
     this.state = {
       user: null,
       alerts: [],
@@ -39,6 +40,7 @@ class App extends Component {
       bidId: 0,
       ownBids: [],
       requester: "Owner",
+      burger: true,
     }
   }
   componentDidMount() {
@@ -192,12 +194,18 @@ class App extends Component {
     })
     .catch(error=>console.log(error))
   }
+  changeBurger=()=>{
+    const burger =this.state.burger
+    this.setState({
+      burger:burger? false: true
+    })
+  }
   render() {
     const { alerts, user, jobs } = this.state
 
     return (
       <React.Fragment>
-        <Header user={user} />
+        <Header user={user} changeBurger={this.changeBurger} burger={this.state.burger}/>
         {alerts.map((alert, index) => (
           <AlertDismissible key={index} variant={alert.type} message={alert.message} />
         ))}

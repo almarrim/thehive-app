@@ -50,7 +50,7 @@ class MyJobs extends Component {
             console.log("here")
             // myJobs = this.props.jobs.filter(job => job.creator === this.props.user._id)
             // jobs = myJobs.map((job, index) => {
-            //     return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
+            //     return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
             // })
             switch(this.state.show){
                 case "all":
@@ -83,7 +83,7 @@ class MyJobs extends Component {
                                 jobSt = "canceled";
             }
                 return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} />            Job Status: {jobSt}
-                <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>JobsPage</Link></div >
+                <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
             });
         }
         const buttons = <div>
