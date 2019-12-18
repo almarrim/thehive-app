@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import Bid from './bid'
-import {getComments, createComment} from '../api'
+import {getComments, createComment, deleteComment} from '../api'
+/**
+ * bid status meanings: 
+ *              0 new > only job creator can interact to change bid status 
+ *              1 engaged in negotiationes > job creator and bidder both can interact at this level and change proposal status
+ *              2 closed negotiations> job creator and bidder both can close negotiations
+ *              3 accepted proposal > only job creator can accept proposals
+ */
 class SingleBid extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +46,14 @@ class SingleBid extends Component {
             content: content
         })
     }
+    handleAccept=(e,status, bidId,jobId)=>{
+        console.log(e)
+        e.preventDefault()
+        this.props.jobStatus(jobId,1)
+        this.props.bidStatus(status, bidId)
+    }
     engage=(e,status, bidId)=>{
+        console.log(e)
         e.preventDefault()
         this.props.bidStatus(status, bidId)
         // this.setState({
@@ -61,6 +75,20 @@ class SingleBid extends Component {
         })
         .catch(error=>console.log(error))
     }
+    handleDeleteComment=(e, commentId, bidId)=>{
+        e.preventDefault()
+        deleteComment(bidId, this.props.user, commentId)
+        .then(response => {
+            console.log(response)
+            const comments = [...this.state.comments]
+            const commentIndex= comments.findIndex(comment=>comment._id==commentId)
+            comments.splice(commentIndex,1)
+            this.setState({
+                comments:[...comments]
+            })
+        })
+        .catch(error=> console.log(error))
+    }
     render() {
         console.log(this.props.match.params)
         console.log(this.props.bids)
@@ -68,6 +96,7 @@ class SingleBid extends Component {
         let currentBid;
         let engage;
         let contents;
+        let acceptButton
         if (this.props.match.params.bidId){
             const bid = this.props.bids.filter(bid=>bid._id===this.props.match.params.bidId)
             if(bid[0]){
@@ -81,6 +110,13 @@ class SingleBid extends Component {
             if(this.props.user._id===bid[0].bidder || this.props.user._id=== job[0].creator){
                 if(bid[0].status!==2){
                     console.log(bid[0].status)
+                    if(job[0].creator===this.props.user._id && bid[0].status!=2 && bid[0].status!=3){
+                        acceptButton=
+                        <div>
+                        <button onClick={(e)=>this.handleAccept(e,3, bid[0]._id, job[0]._id)}>Accept</button>
+                        <button onClick={(e)=>this.engage(e,2, bid[0]._id)}>Close Proposal</button>
+                        </div>
+                    }
                     if(bid[0].status===1){
                         const content = this.state.content
                     engage =
@@ -92,9 +128,10 @@ class SingleBid extends Component {
                 </form>
                 <button onClick={(e)=>this.engage(e,2, bid[0]._id)}>Close Negotiations</button>
                 </div>
+                
                 }else{
                     console.log(job,this.props.user._id)
-                    if (this.props.user._id===job[0].creator){
+                    if (this.props.user._id===job[0].creator && bid[0].status==0){
                         engage= <button onClick={(e)=>this.engage(e,1, bid[0]._id)}>Engage</button>
                     }}
             } else {
@@ -105,6 +142,8 @@ class SingleBid extends Component {
                 })
                 if (this.state.comments){
                     contents = this.state.comments.map((comment, index)=>{
+                        const deleteButton = <button onClick={(e)=>this.handleDeleteComment(e,comment._id, bid[0]._id)}>Delete</button>
+                        console.log(deleteButton)
                         let commentAuthor;
                         if(this.props.user._id===comment.author){
                             commentAuthor="You"
@@ -113,8 +152,10 @@ class SingleBid extends Component {
                         } else {
                             commentAuthor="Proposal Creator"
                         }
-                        return <div><p key={index}>{comment.content}</p>
-                        <h6>by: {commentAuthor}</h6></div>
+                        return <div key={index}><p >{comment.content}</p>
+                        {/* <h6>by: {commentAuthor=="You"?(`${commentAuthor} `+deleteButton+"HNMJH"):commentAuthor}</h6> */}
+                        <h6>by: {commentAuthor} {commentAuthor=="You" && bid[0].status==1?deleteButton:""}</h6>
+                        </div>
                     })
                     console.log(contents)
                 }
@@ -123,6 +164,7 @@ class SingleBid extends Component {
         return (
             <div>
                 <h1>this is the single bid page</h1>
+                XXXX{acceptButton}KKKK
                 {currentBid}
                 {contents}
                 {engage}

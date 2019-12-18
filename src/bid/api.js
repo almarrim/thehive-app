@@ -62,3 +62,12 @@ export const createComment = function (bidId, user, content) {
         }
     });
 }
+export const deleteComment = function(bidId, user, commentId){
+    return axios({
+        url: `${apiUrl}/api/bids/${bidId}/comments/${commentId}`,
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${user.token}`
+        }
+    });
+}

@@ -87,6 +87,7 @@ class App extends Component {
     const job = {
       status: status
     }
+    console.log(job, jobId)
     updateAJob(job, this.state.user, jobId)
     .then((response) => {
       let jobs = [...this.state.jobs]
@@ -230,7 +231,7 @@ class App extends Component {
             <MyBids {...props} alert={this.alert} user={user} jobId={this.state.jobId} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} setRequester={this.setRequester} />
           )} />
             <AuthenticatedRoute user={user} path='/single-bid/:bidId' render={(props) => (
-            <SingleBid {...props} alert={this.alert} user={user} jobId={this.state.jobId}  jobs={this.state.jobs} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} bidStatus={this.bidStatus} bidId={this.state.bidId} setRequester={this.setRequester} />
+            <SingleBid {...props} alert={this.alert} user={user} jobId={this.state.jobId}  jobs={this.state.jobs} jobStatus={this.jobStatus} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} bidStatus={this.bidStatus} bidId={this.state.bidId} setRequester={this.setRequester} />
           )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />

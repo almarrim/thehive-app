@@ -118,7 +118,7 @@ class SingleJob extends Component {
                         bidResponse = <h4> No Bids</h4>
                     }
                 }
-                if(this.state.status!=2){
+                if(this.state.status==0){
                     canceleButton = <button onClick={(e) => this.handleJobStatus(e)}>Cancel Job</button>
                 }
             } else {
@@ -142,12 +142,13 @@ class SingleJob extends Component {
         } else {
             bidsCount = "10<"
         }
-                const openBids = this.props.bids.filter(bid=> bid.status==1)
-                const closeBids = this.props.bids.filter(bid=> bid.status==2)
+                const jobBids= this.props.bids.filter(bid => bid.jobId==this.state.job._id)
+                const openBids = jobBids.filter(bid=> bid.status==1)
+                const closeBids = jobBids.filter(bid=> bid.status==2)
             const jobStats = <div>
                  <h5>Proposals: {bidsCount}</h5>
                  <h5>Open Negotiations: {openBids.length}</h5>
-                 <h5>Closed Bids: {closeBids.length}</h5>
+                 <h5>Closed Proposals: {closeBids.length}</h5>
                  {bidResponse}
                  </div>
         return (<div>
