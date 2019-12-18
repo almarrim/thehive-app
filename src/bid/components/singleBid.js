@@ -164,7 +164,8 @@ class SingleBid extends Component {
         return (
             <div>
                 <h1>this is the single bid page</h1>
-                XXXX{acceptButton}KKKK
+                <button onClick={this.props.history.goBack}>Back</button>
+                {acceptButton}
                 {currentBid}
                 {contents}
                 {engage}

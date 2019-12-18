@@ -91,6 +91,7 @@ class JobBids extends Component {
             </div>
         return (<div><h1>IN Job Bids</h1>
         {buttons}
+        <button onClick={this.props.history.goBack}>Back</button>
             {bids}
             <button onClick={this.props.history.goBack}>Back</button>
         </div>);
