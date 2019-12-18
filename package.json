@@ -1,6 +1,6 @@
 {
   "name": "x17f",
-  "homepage": "https://almarrim.github.io/<REPO NAME>",
+  "homepage": "https://almarrim.github.io/thehive-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,7 +27,9 @@
     "test": "node scripts/test.js --env=jsdom",
     "make-standard": "eslint --fix ./src;exit 0",
     "nag": "eslint ./src;exit 0",
-    "deploy": "sh scripts/deploy.sh"
+    // "deploy": "sh scripts/deploy.sh",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "collectCoverageFrom": [
