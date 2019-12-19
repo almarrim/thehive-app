@@ -18,7 +18,7 @@ The Hive is a business app, where work can be offerd such as construction, mater
 ## Planning:
 1. User Stories:
 ![User Stories](./screenshots/userstories.jpg)
-2. Wireframes:
+2. Wireframes(some of them):
     - ![wireframe 1](./screenshots/IMG_0722.jpg)
     - ![wireframe 2](./screenshots/IMG_0721.jpg)
     - ![wireframe 2](./screenshots/IMG_0720.jpg)
