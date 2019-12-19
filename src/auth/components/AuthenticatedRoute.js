@@ -14,8 +14,8 @@ const AuthenticatedRoute = ({
   if (user && render) {
     return <Route {...rest} render={render} />
 
-  // if props include a `user` object but no `render` then create route with `Component`
-  // if props do not include a `user` object then redirect to home
+    // if props include a `user` object but no `render` then create route with `Component`
+    // if props do not include a `user` object then redirect to home
   } else {
     return <Route {...rest} render={props =>
       user ? <Component {...props} /> : <Redirect to='/' />

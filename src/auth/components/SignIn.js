@@ -5,7 +5,7 @@ import { signIn } from '../api'
 import messages from '../messages'
 
 class SignIn extends Component {
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
@@ -24,7 +24,19 @@ class SignIn extends Component {
     const { alert, history, setUser } = this.props
 
     signIn(this.state)
-      .then(res => setUser(res.data.user))
+      .then(res => {
+        console.log("the token", res.data.user.token)
+        setUser(res.data.user)
+        const bids = [...this.props.bids]
+        bids.map((bid,index)=>{
+          if(res.data.user._id==bid.bidder){
+            const jobIndex=this.props.jobs.findIndex(job=>job._id==bid.jobId)
+            if(jobIndex<0){
+              this.props.deleteBid(bid._id,this.props.history)
+            }
+          }
+      })
+      })
       .then(() => alert(messages.signInSuccess, 'success'))
       .then(() => history.push('/'))
       .catch(error => {
@@ -34,7 +46,7 @@ class SignIn extends Component {
       })
   }
 
-  render () {
+  render() {
     const { email, password } = this.state
 
     return (

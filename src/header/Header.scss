@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Allerta");
+@import url("https://fonts.googleapis.com/css?family=Crimson+Text");
+
 $charcoal: #bbb;
 
 .main-header {
@@ -5,12 +8,19 @@ $charcoal: #bbb;
   border-bottom: 1px solid $charcoal;
   display: flex;
   height: 100px;
-  padding: 0 20px;
-
+  padding: 0 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f7f7f500;
+  z-index: 1;
+  // background-color: rgba(0, 0, 0, 0.507);
+  // color: #f7f7f5;
+  // background-color: $charcoal;
   a,
   span {
     font-size: 1.2em;
-    margin: 0 15px;
+    margin: 0 10px;
   }
 }
 
@@ -18,7 +28,7 @@ $charcoal: #bbb;
   align-items: center;
   display: flex;
   flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 @media (max-width: 600px) {
@@ -47,4 +57,96 @@ $charcoal: #bbb;
       width: 80%;
     }
   }
+}
+/*****************************************/
+.Link {
+  // border: 1px solid pink;
+  // background-color: blue;
+  // color: brown;
+  // margin:0px;
+  // padding: 0px;
+  // color: black;
+  color: black;
+  font-family: "Allerta", Helvetica, sans-serif;
+  font-weight: 100;
+}
+/* Dropdown Button */
+.dropbtn {
+  background-color: #9fa8a800;
+  color: white;
+  padding: 0 5px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  opacity: 0.5;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 0.7rem;
+  // margin-right: 0;
+  margin-left: 0;
+  z-index: 2;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #63636334;
+  // background-color: red;
+  z-index: 2;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+  z-index: 2;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #63636334;
+  z-index: 2;
+}
+// .dropbtn:hover {
+//   background-color: #9fa8a8;
+//   opacity: 0.5;
+// }
+#burger1,
+#burger2,
+#burger3 {
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin: 6px 0;
+}
+// #welcome-user {
+//   // color: red;
+//   font-size: 1.2em;
+//   margin: 0 10px;
+// }
+a:hover {
+  color: rgba(0, 0, 0, 0.445);
+  // background-color: black;
+  text-decoration: none;
+  // background-color: red;
 }
