@@ -14,7 +14,7 @@ class SingleJob extends Component {
             job: {},
             jobId: 0,
             bids: {},
-            Status:0,
+            Status: 0,
         }
     }
     componentDidMount() {
@@ -29,12 +29,13 @@ class SingleJob extends Component {
         this.props.setJobId(this.props.match.params.id)
         const job = this.props.jobs.find(job => job._id === this.props.match.params.id)
         console.log(job)
-        if(job){
+        if (job) {
             console.log(job)
-        this.setState({
-            job: Object.assign({}, job),
-            status: job.status,
-        })}
+            this.setState({
+                job: Object.assign({}, job),
+                status: job.status,
+            })
+        }
         // showAJob(this.props.match.params.id)
         //     .then((response) => {
         //         this.setState({
@@ -51,11 +52,11 @@ class SingleJob extends Component {
         // deleteAJOB(this.props.match.params.id)
         // this.props.history.push('/')
     }
-    handleJobStatus=(e)=>{
+    handleJobStatus = (e) => {
         e.preventDefault()
         this.props.jobStatus(this.state.job._id, 2)
         this.setState({
-            status:2
+            status: 2
         })
     }
     handleEdit(event) {
@@ -76,12 +77,12 @@ class SingleJob extends Component {
         let job = <h1>soon</h1>
         let status
         console.log(this.state.job.status)
-        if(this.state.status==2){
-            status= "Canceled"
-        } else if (this.state.status==1){
-            status= "Assigned"
+        if (this.state.status == 2) {
+            status = "Canceled"
+        } else if (this.state.status == 1) {
+            status = "Assigned"
         } else {
-            status="Accepting"
+            status = "Accepting"
         }
         if (this.state.job) {
             job = <Job title={this.state.job.title} type={this.state.job.type} description={this.state.job.description} key={job._id} />
@@ -105,33 +106,34 @@ class SingleJob extends Component {
                     // bids = jobBids.map((bid, index) => {
                     //     return <Bid value={bid.value} content={bid.content} bidId={bid._id} deleteBid={this.props.deleteBid} user={this.props.user} key={index} />
                     // })
-                    if (currentBids.length>0){
-                    bidResponse = <div><h4>Bids: {currentBids.length}</h4>   < Link to="/job-bids"
-                    // {{
-                    //     pathname: `/job-bids`,
-                    //     state: {
-                    //         bids: currentBids,
-                    //     }
-                    // }
-                    // }
-                    > ViewBids</Link ></div>}else {
+                    if (currentBids.length > 0) {
+                        bidResponse = <div><h4>Bids: {currentBids.length}</h4>   < Link to="/job-bids"
+                        // {{
+                        //     pathname: `/job-bids`,
+                        //     state: {
+                        //         bids: currentBids,
+                        //     }
+                        // }
+                        // }
+                        > ViewBids</Link ></div>
+                    } else {
                         bidResponse = <h4> No Bids</h4>
                     }
                 }
-                if(this.state.status==0){
+                if (this.state.status == 0) {
                     canceleButton = <button onClick={(e) => this.handleJobStatus(e)}>Cancel Job</button>
                 }
             } else {
-                const jobBids= this.props.bids.filter(bid => bid.jobId==this.state.job._id)
-                const myBid= jobBids.filter(bid => bid.bidder==this.props.user._id)
-                console.log(this.props.bids,this.state.job )
-                if(myBid.length){
+                const jobBids = this.props.bids.filter(bid => bid.jobId == this.state.job._id)
+                const myBid = jobBids.filter(bid => bid.bidder == this.props.user._id)
+                console.log(this.props.bids, this.state.job)
+                if (myBid.length) {
                     console.log("inmybids", myBid)
                     bidResponse = <Link to={`/single-bid/${myBid[0]._id}`}> View Your Bid</Link>
-                } 
+                }
                 else {
                     console.log("inelse", myBid)
-                    bidResponse =  <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
+                    bidResponse = <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
                 }
             }
         }
@@ -142,23 +144,25 @@ class SingleJob extends Component {
         } else {
             bidsCount = "10<"
         }
-                const jobBids= this.props.bids.filter(bid => bid.jobId==this.state.job._id)
-                const openBids = jobBids.filter(bid=> bid.status==1)
-                const closeBids = jobBids.filter(bid=> bid.status==2)
-            const jobStats = <div>
-                 <h5>Proposals: {bidsCount}</h5>
-                 <h5>Open Negotiations: {openBids.length}</h5>
-                 <h5>Closed Proposals: {closeBids.length}</h5>
-                 {bidResponse}
-                 </div>
+        const jobBids = this.props.bids.filter(bid => bid.jobId == this.state.job._id)
+        const openBids = jobBids.filter(bid => bid.status == 1)
+        const closeBids = jobBids.filter(bid => bid.status == 2)
+        const jobStats = <table class="table table-striped">
+            <tr scope="col">Proposals: {bidsCount}</tr>
+            <tr>Open Negotiations: {openBids.length}</tr>
+            <tr>Closed Proposals: {closeBids.length}</tr>
+        </table>
         return (<div>
-    <h1> This is SINGLJOB with Status {status}</h1>
+            <h1 className='title-section'> Job Details </h1>
             <button onClick={this.props.history.goBack}>Back</button>
             {job}
-            {buttons}
+            {buttons}{status}
             {/* {buttonEdit} */}
+
             {jobStats}
+
             {/* {viewBids} */}
+            {bidResponse}
             {canceleButton}
         </div >);
     }

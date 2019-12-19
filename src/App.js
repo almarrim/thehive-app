@@ -29,7 +29,7 @@ class App extends Component {
     this.deleteBid = this.deleteBid.bind(this)
     this.bidSubmit = this.bidSubmit.bind(this)
     this.jobStatus = this.jobStatus.bind(this)
-    this.changeBurger= this.changeBurger.bind(this)
+    this.changeBurger = this.changeBurger.bind(this)
     this.state = {
       user: null,
       alerts: [],
@@ -85,21 +85,21 @@ class App extends Component {
       jobId: jobId
     })
   }
-  jobStatus=(jobId, status)=>{
+  jobStatus = (jobId, status) => {
     const job = {
       status: status
     }
     console.log(job, jobId)
     updateAJob(job, this.state.user, jobId)
-    .then((response) => {
-      let jobs = [...this.state.jobs]
-      const jobIndex = jobs.findIndex(job => job._id === jobId)
-      jobs[jobIndex].status = job.status
-      this.setState({
-        jobs:[...jobs]
+      .then((response) => {
+        let jobs = [...this.state.jobs]
+        const jobIndex = jobs.findIndex(job => job._id === jobId)
+        jobs[jobIndex].status = job.status
+        this.setState({
+          jobs: [...jobs]
+        })
       })
-    })
-    .catch((error) => console.log(error))
+      .catch((error) => console.log(error))
   }
 
   setBidId = (bidId) => {
@@ -137,7 +137,7 @@ class App extends Component {
         console.log(response)
         const jobs = [...this.state.jobs]
         const jobIndex = jobs.findIndex(job => job._id === jobId)
-        const bids = this.state.bids.filter(bid=> bid.jobId== jobId)
+        const bids = this.state.bids.filter(bid => bid.jobId == jobId)
         console.log(bids)
         jobs.splice(jobIndex, 1)
         this.setJobs(jobs)
@@ -145,16 +145,16 @@ class App extends Component {
       })
       .catch(error => console.log(error))
   }
-  deleteBid = (bidId, history)=>{
+  deleteBid = (bidId, history) => {
     deleteABid(this.state.user, bidId)
       .then((response) => {
         console.log(response)
         const bids = [...this.state.bids]
         const bidIndex = bids.findIndex(bid => bid._id === bidId)
-        const jobId= bids[bidIndex].jobId
+        const jobId = bids[bidIndex].jobId
         bids.splice(bidIndex, 1)
         this.setState({
-          bids:[...bids]
+          bids: [...bids]
         })
         console.log("after the state", jobId)
         history.push(`/jobs/${jobId}`)
@@ -179,25 +179,25 @@ class App extends Component {
       requester: requester
     })
   }
-  bidStatus=(status, bidId)=>{
-    const bid={
-      status:status
+  bidStatus = (status, bidId) => {
+    const bid = {
+      status: status
     }
-    updateBid(bid,this.state.user, bidId)
-    .then(()=>{
-      const bids = [...this.state.bids]
-      const bidIndex = this.state.bids.findIndex(bid=>bid._id==bidId);
-      bids[bidIndex].status= status
-      this.setState({
-        bids:[...bids]
+    updateBid(bid, this.state.user, bidId)
+      .then(() => {
+        const bids = [...this.state.bids]
+        const bidIndex = this.state.bids.findIndex(bid => bid._id == bidId);
+        bids[bidIndex].status = status
+        this.setState({
+          bids: [...bids]
+        })
       })
-    })
-    .catch(error=>console.log(error))
+      .catch(error => console.log(error))
   }
-  changeBurger=()=>{
-    const burger =this.state.burger
+  changeBurger = () => {
+    const burger = this.state.burger
     this.setState({
-      burger:burger? false: true
+      burger: burger ? false : true
     })
   }
   render() {
@@ -205,10 +205,10 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <Header user={user} changeBurger={this.changeBurger} burger={this.state.burger}/>
-        {alerts.map((alert, index) => (
+        <Header user={user} changeBurger={this.changeBurger} burger={this.state.burger} />
+        {/* {alerts.map((alert, index) => (
           <AlertDismissible key={index} variant={alert.type} message={alert.message} />
-        ))}
+        ))} */}
         <main className="container">
           <Route exact path='/jobs/:id' render={(props) => (
             <SingleJob {...props} alert={this.alert} setUser={this.setUser} user={user} jobs={this.state.jobs} setJobs={this.setJobs} setJobId={this.setJobId} handleDeleteAJob={this.handleDeleteAJob} jobStatus={this.jobStatus} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} setRequester={this.setRequester} />
@@ -235,17 +235,17 @@ class App extends Component {
           <Route user={user} path='/job-bids' render={(props) => (
             <JobBids {...props} alert={this.alert} user={user} jobId={this.state.jobId} setBidId={this.setBidId} deleteBid={this.deleteBid} bids={this.state.bids} requester={this.state.requester} setRequester={this.setRequester} />
           )} />
-            <AuthenticatedRoute user={user} path='/own-bids' render={(props) => (
+          <AuthenticatedRoute user={user} path='/own-bids' render={(props) => (
             <MyBids {...props} alert={this.alert} user={user} jobId={this.state.jobId} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} setRequester={this.setRequester} />
           )} />
-            <AuthenticatedRoute user={user} path='/single-bid/:bidId' render={(props) => (
-            <SingleBid {...props} alert={this.alert} user={user} jobId={this.state.jobId}  jobs={this.state.jobs} jobStatus={this.jobStatus} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} bidStatus={this.bidStatus} bidId={this.state.bidId} setRequester={this.setRequester} />
+          <AuthenticatedRoute user={user} path='/single-bid/:bidId' render={(props) => (
+            <SingleBid {...props} alert={this.alert} user={user} jobId={this.state.jobId} jobs={this.state.jobs} jobStatus={this.jobStatus} setBidId={this.setBidId} bids={this.state.bids} deleteBid={this.deleteBid} requester={this.state.requester} bidStatus={this.bidStatus} bidId={this.state.bidId} setRequester={this.setRequester} />
           )} />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
           <Route path='/sign-in' render={() => (
-            <SignIn alert={this.alert} setUser={this.setUser} jobs={this.state.jobs} bids={this.state.bids} deleteBid={this.deleteBid}/>
+            <SignIn alert={this.alert} setUser={this.setUser} jobs={this.state.jobs} bids={this.state.bids} deleteBid={this.deleteBid} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />

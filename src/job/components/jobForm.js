@@ -34,7 +34,7 @@ class JobForm extends Component {
     }
     handleSubmit(event, user) {
         event.preventDefault()
-        this.props.jobFormSubmit( user, this.props.match.params.jobId, this.state.job, this.props.history)
+        this.props.jobFormSubmit(user, this.props.match.params.jobId, this.state.job, this.props.history)
         // if (this.props.match.params.jobId != 0) {
         //     updateAJOB(this.state.job, user, this.props.match.params.jobId)
         //         .then((response) => {
@@ -63,14 +63,14 @@ class JobForm extends Component {
         return (
             <div>
                 <button onClick={this.props.history.goBack}>Back</button>
-                <form onSubmit={(event) => this.handleSubmit(event, this.props.user)}>
-                    <h2>Create Job</h2>
+                <form className='jobForm' onSubmit={(event) => this.handleSubmit(event, this.props.user)}>
+                    <h1 className='title-section'>Create Job</h1>
                     <label>Title</label>
                     <input required name="title" value={title} type="title" placeholder="Title" onChange={(e) => this.handleChange(e)} />
                     <label>Type</label>
                     <input required name="type" value={type} type="type" placeholder="Type" onChange={(e) => this.handleChange(e)} />
                     <label>description</label>
-                    <input required name="description" value={description} type="description" placeholder="Description" onChange={(e) => this.handleChange(e)} />
+                    <textarea required name="description" value={description} type="description" placeholder="Description" onChange={(e) => this.handleChange(e)} ></textarea>
                     <button type="submit">Submit</button>
                 </form>
             </div>

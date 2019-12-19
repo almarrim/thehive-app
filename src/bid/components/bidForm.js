@@ -45,7 +45,7 @@ class BidForm extends Component {
             <div>
                 <button onClick={this.props.history.goBack}>Back</button>
                 <form onSubmit={(event) => this.handleBidSubmit(event)}>
-                    <h2>Create Bid</h2>
+                    <h1 className='title-section'>Create A Proposal</h1>
                     <label>Value</label>
                     <input required name="value" value={value} type="value" placeholder="Title" onChange={(e) => this.handleChange(e)} />
                     <label>Content</label>

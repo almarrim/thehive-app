@@ -12,21 +12,25 @@ export default class JobsContainer extends Component {
     render() {
         let jobs = <h2>No Jobs</h2>
         if (this.props.jobs.length > 0) {
-            if(this.props.user){
-                const notJobs= this.props.jobs.filter(job=>job.creator!=this.props.user._id)
+            if (this.props.user) {
+                const notJobs = this.props.jobs.filter(job => job.creator != this.props.user._id)
                 jobs = notJobs.map((job, index) => {
-                    return <div className="Job-Item" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
+                    return <div className="col-sm-6"><div className='card' ><div className="card-body" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }} className='card-link btn btn-primary'>Go to Job</Link></div ></div></div>
                 })
-            }else {
+            } else {
                 jobs = this.props.jobs.map((job, index) => {
-                    return <div className="Job-Item" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
+                    return <div class="col-sm-6"><div className="card" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }} className='card-link btn btn-primary'>Go to Job</Link></div ></div>
                 })
             }
         }
         return (
-            <div id="theBest" className="Job-Container">
-                This is the Container
-                {jobs}
+            <div>
+                <h1 className="title">THE HIVE</h1>
+                <div id="theBest" className="Job-Container">
+                    <div className='row'>
+                        {jobs}
+                    </div>
+                </div>
             </div>
         )
     }
