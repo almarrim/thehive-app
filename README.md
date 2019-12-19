@@ -1,4 +1,4 @@
-# [The Hive (APP)]( https://almarrim.github.io/thehive-app/):
+# [The Hive (APP)]( https://github.com/almarrim/thehive-app):
 The Hive is a business app, where work can be offerd such as construction, material supply  etc. People give proposals on jobs and job creator can select as desire.  Users can both create and bid on jobs available.[To The App](https://almarrim.github.io/thehive-app/), [To The Backend Repo](https://github.com/almarrim/thehive-backend-app)
 
 
