@@ -137,9 +137,9 @@ class SingleJob extends Component {
                 }
             }
         }
-        if (this.props.bids.length < 6) {
+        if (currentBids.length < 6) {
             bidsCount = "0-5"
-        } else if (this.props.bids.length < 11) {
+        } else if (currentBids.length < 11) {
             bidsCount = "6-10"
         } else {
             bidsCount = "10<"
