@@ -9,7 +9,7 @@ class SingleJob extends Component {
     constructor(props) {
         super(props);
         // this.deleteBid = this.deleteBid.bind(this)
-        console.log("this.props", this.props)
+        // console.log("this.props", this.props)
         this.state = {
             job: {},
             jobId: 0,
@@ -28,9 +28,9 @@ class SingleJob extends Component {
         //     .catch(error => console.log(error))
         this.props.setJobId(this.props.match.params.id)
         const job = this.props.jobs.find(job => job._id === this.props.match.params.id)
-        console.log(job)
+        // console.log(job)
         if (job) {
-            console.log(job)
+            // console.log(job)
             this.setState({
                 job: Object.assign({}, job),
                 status: job.status,
@@ -72,11 +72,11 @@ class SingleJob extends Component {
     //     this.props.removeBid(this.props.bidId)
     // }
     render() {
-        console.log("render")
+        // console.log("render")
         let currentBids = [];
         let job = <h1>soon</h1>
         let status
-        console.log(this.state.job.status)
+        // console.log(this.state.job.status)
         if (this.state.status == 2) {
             status = "Canceled"
         } else if (this.state.status == 1) {
@@ -93,14 +93,14 @@ class SingleJob extends Component {
         let bidResponse
         let canceleButton
         if (this.props.user) {
-            console.log(this.props.user)
+            // console.log(this.props.user)
             if (this.props.user._id === this.state.job.creator) {
-                console.log(this.props.user)
+                // console.log(this.props.user)
 
                 buttons = <div><button onClick={(e) => this.handleDelete(e)}>Delete</button><button onClick={(e) => this.handleEdit(e)}>Edit</button></div>;
                 // buttonEdit = <button onClick={(e) => this.handleEdit(e)}>Edit</button>;
                 if (this.props.bids.length > 0) {
-                    console.log(this.props.bids.length)
+                    // console.log(this.props.bids.length)
 
                     currentBids = this.props.bids.filter(bid => bid.jobId === this.state.job._id)
                     // bids = jobBids.map((bid, index) => {
@@ -126,13 +126,13 @@ class SingleJob extends Component {
             } else {
                 const jobBids = this.props.bids.filter(bid => bid.jobId == this.state.job._id)
                 const myBid = jobBids.filter(bid => bid.bidder == this.props.user._id)
-                console.log(this.props.bids, this.state.job)
+                // console.log(this.props.bids, this.state.job)
                 if (myBid.length) {
-                    console.log("inmybids", myBid)
+                    // console.log("inmybids", myBid)
                     bidResponse = <Link to={`/single-bid/${myBid[0]._id}`}> View Your Bid</Link>
                 }
                 else {
-                    console.log("inelse", myBid)
+                    // console.log("inelse", myBid)
                     bidResponse = <button onClick={(e) => this.handleBid(e)}>Make A Bid</button>
                 }
             }

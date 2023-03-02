@@ -56,7 +56,7 @@ class App extends Component {
       })
     getAllBids()
       .then(response => {
-        console.log(response.data)
+        // console.log(response.data)
         // let ownBids = []
         // if (this.state.user) {
         //   ownBids = response.data.filter(bid => bid.bidder == this.state.user._id)
@@ -125,7 +125,7 @@ class App extends Component {
           const jobs = [...this.state.jobs]
           jobs.push(response.data.job)
           this.setJobs(jobs)
-          console.log(history)
+          // console.log(history)
           history.push(`/jobs/${response.data.job._id}`)
         })
         .catch((error) => console.log(error))
@@ -138,7 +138,7 @@ class App extends Component {
         const jobs = [...this.state.jobs]
         const jobIndex = jobs.findIndex(job => job._id === jobId)
         const bids = this.state.bids.filter(bid => bid.jobId == jobId)
-        console.log(bids)
+        // console.log(bids)
         jobs.splice(jobIndex, 1)
         this.setJobs(jobs)
         history.push('/')
@@ -156,7 +156,7 @@ class App extends Component {
         this.setState({
           bids: [...bids]
         })
-        console.log("after the state", jobId)
+        // console.log("after the state", jobId)
         history.push(`/jobs/${jobId}`)
       })
       .catch(error => console.log(error))
@@ -169,7 +169,7 @@ class App extends Component {
         this.setState({
           bids: [...bids]
         })
-        console.log("in the create response", response)
+        // console.log("in the create response", response)
         history.push(`/jobs/${response.data.bid.jobId}`)
       })
       .catch((error) => console.log(error))

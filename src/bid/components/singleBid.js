@@ -26,13 +26,13 @@ class SingleBid extends Component {
             this.props.setBidId(this.props.match.params.bidId)
             getComments(this.props.user, this.props.match.params.bidId)
                 .then(response => {
-                    console.log(response.data.comments)
+                    // console.log(response.data.comments)
                     const comments = [...response.data.comments]
-                    console.log(comments)
+                    // console.log(comments)
                     this.setState({
                         comments: [...comments],
                     })
-                    console.log(response.data.comments)
+                    // console.log(response.data.comments)
                 })
                 .catch(error => console.log(error))
         }
@@ -40,20 +40,20 @@ class SingleBid extends Component {
     }
     handleChange(event) {
         const content = event.target.value
-        console.log(event)
-        console.log(content)
+        // console.log(event)
+        // console.log(content)
         this.setState({
             content: content
         })
     }
     handleAccept = (e, status, bidId, jobId) => {
-        console.log(e)
+        // console.log(e)
         e.preventDefault()
         this.props.jobStatus(jobId, 1)
         this.props.bidStatus(status, bidId)
     }
     engage = (e, status, bidId) => {
-        console.log(e)
+        // console.log(e)
         e.preventDefault()
         this.props.bidStatus(status, bidId)
         // this.setState({
@@ -62,10 +62,10 @@ class SingleBid extends Component {
     }
     handleComment = (e) => {
         e.preventDefault()
-        console.log(this.state.content)
+        // console.log(this.state.content)
         createComment(this.props.bidId, this.props.user, this.state.content)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 const comments = [...this.state.comments]
                 comments.push(response.data)
                 this.setState({
@@ -79,7 +79,7 @@ class SingleBid extends Component {
         e.preventDefault()
         deleteComment(bidId, this.props.user, commentId)
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 const comments = [...this.state.comments]
                 const commentIndex = comments.findIndex(comment => comment._id == commentId)
                 comments.splice(commentIndex, 1)
@@ -90,8 +90,8 @@ class SingleBid extends Component {
             .catch(error => console.log(error))
     }
     render() {
-        console.log(this.props.match.params)
-        console.log(this.props.bids)
+        // console.log(this.props.match.params)
+        // console.log(this.props.bids)
         let bid;
         let currentBid;
         let engage;
@@ -158,7 +158,7 @@ class SingleBid extends Component {
                                 <h6>by: {commentAuthor} {commentAuthor == "You" && bid[0].status == 1 ? deleteButton : ""}</h6>
                             </div>
                         })
-                        console.log(contents)
+                        // console.log(contents)
                     }
                 }
             }

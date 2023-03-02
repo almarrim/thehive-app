@@ -16,11 +16,11 @@ class JobBids extends Component {
     }
     componentDidMount() {
         if (this.props.bids) {
-            console.log(this.props.bids)
-            console.log("here")
+            // console.log(this.props.bids)
+            // console.log("here")
             const allBids = this.props.bids.filter(bid => bid.jobId === this.props.jobId)
             if (allBids.length > 0) {
-                console.log("here")
+                // console.log("here")
                 const openBids = allBids.filter(bid => bid.status == 0)
                 const engaged = allBids.filter(bid => bid.status == 1)
                 const closed = allBids.filter(bid => bid.status == 2)

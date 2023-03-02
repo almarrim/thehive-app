@@ -25,17 +25,17 @@ class SignIn extends Component {
 
     signIn(this.state)
       .then(res => {
-        console.log("the token", res.data.user.token)
+        // console.log("the token", res.data.user.token)
         setUser(res.data.user)
         const bids = [...this.props.bids]
-        bids.map((bid,index)=>{
-          if(res.data.user._id==bid.bidder){
-            const jobIndex=this.props.jobs.findIndex(job=>job._id==bid.jobId)
-            if(jobIndex<0){
-              this.props.deleteBid(bid._id,this.props.history)
+        bids.map((bid, index) => {
+          if (res.data.user._id == bid.bidder) {
+            const jobIndex = this.props.jobs.findIndex(job => job._id == bid.jobId)
+            if (jobIndex < 0) {
+              this.props.deleteBid(bid._id, this.props.history)
             }
           }
-      })
+        })
       })
       .then(() => alert(messages.signInSuccess, 'success'))
       .then(() => history.push('/'))

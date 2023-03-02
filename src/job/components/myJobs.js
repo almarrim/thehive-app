@@ -14,12 +14,12 @@ class MyJobs extends Component {
         }
     }
     componentDidMount() {
-        console.log("here", this.props.jobs.length, this.props.jobs)
+        // console.log("here", this.props.jobs.length, this.props.jobs)
         if (this.props.jobs.length > 0) {
-            console.log("here")
+            // console.log("here")
             const allJobs = this.props.jobs.filter(job => job.creator === this.props.user._id)
             if (allJobs.length > 0) {
-                console.log("here")
+                // console.log("here")
                 const openJobs = allJobs.filter(job => job.status == 0)
                 const assigned = allJobs.filter(job => job.status == 1)
                 const canceled = allJobs.filter(job => job.status == 2)
@@ -45,32 +45,32 @@ class MyJobs extends Component {
     }
     render() {
         let jobs = <h2>No Jobs</h2>
-        console.log("here")
+        // console.log("here")
         let myJobs
         if (this.props.jobs.length > 0) {
-            console.log("here")
+            // console.log("here")
             // myJobs = this.props.jobs.filter(job => job.creator === this.props.user._id)
             // jobs = myJobs.map((job, index) => {
             //     return <div key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div >
             // })
             switch (this.state.show) {
                 case "all":
-                    console.log("here")
+                    // console.log("here")
                     myJobs = [...this.state.allJobs];
                     break;
                 case "open":
-                    console.log("here")
+                    // console.log("here")
                     myJobs = [...this.state.openJobs];
                     break;
                 case "assigned":
-                    console.log("here")
+                    // console.log("here")
                     myJobs = [...this.state.assigned];
                     break;
                 case "canceled":
-                    console.log("here")
+                    // console.log("here")
                     myJobs = [...this.state.canceled];
             }
-            console.log("here", myJobs)
+            // console.log("here", myJobs)
             jobs = myJobs.map((job, index) => {
                 let jobSt
                 switch (job.status) {
