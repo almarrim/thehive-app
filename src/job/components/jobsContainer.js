@@ -15,17 +15,18 @@ export default class JobsContainer extends Component {
             if (this.props.user) {
                 const notJobs = this.props.jobs.filter(job => job.creator != this.props.user._id)
                 jobs = notJobs.map((job, index) => {
-                    return <div className="col-sm-6"><div className='card' ><div className="card-body" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }} className='card-link btn btn-primary'>Go to Job</Link></div ></div></div>
+                    return <div className="col-sm-6" key={index}><div className='card' ><div className="card-body" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }} className='card-link btn btn-primary'>Go to Job</Link></div ></div></div>
                 })
             } else {
                 jobs = this.props.jobs.map((job, index) => {
-                    return <div class="col-sm-6"><div className="card" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }} className='card-link btn btn-primary'>Go to Job</Link></div ></div>
+                    return <div className="col-sm-6" key={index}><div className="card" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} /> <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }} className='card-link btn btn-primary'>Go to Job</Link></div ></div>
                 })
             }
         }
         return (
             <div>
                 <h1 className="title">THE HIVE</h1>
+                <p>The Hive is a business app, where work such as construction, material supply etc. can be offerd. People can give proposals on jobs. Job creators can select the desired proposal. Users can both create jobs and bid on available jobs.</p>
                 <div id="theBest" className="Job-Container">
                     <div className='row'>
                         {jobs}
