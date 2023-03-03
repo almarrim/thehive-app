@@ -56,7 +56,7 @@ class App extends Component {
       })
     getAllBids()
       .then(response => {
-        // console.log(response.data)
+        console.log(response.data)
         // let ownBids = []
         // if (this.state.user) {
         //   ownBids = response.data.filter(bid => bid.bidder == this.state.user._id)
