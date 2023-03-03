@@ -1,7 +1,8 @@
 let apiUrl
 const expressPort = 3000
 const apiUrls = {
-  production: 'https://thehive.onrender.com',
+  // production: 'https://thehive.onrender.com',
+  production: 'https://busy-ruby-gazelle-cape.cyclic.app',
   development: `http://localhost:${expressPort}`
 }
 
