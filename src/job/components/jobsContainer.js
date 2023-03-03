@@ -26,7 +26,7 @@ export default class JobsContainer extends Component {
         return (
             <div>
                 <h1 className="title">THE HIVE</h1>
-                <p>The Hive is a business app, where work such as construction, material supply etc. can be offerd. People can give proposals on jobs. Job creators can select the desired proposal. Users can both create jobs and bid on available jobs.</p>
+                <p>The Hive is a business app, where work such as construction, material supply etc. can be offerd. People can give proposals on jobs. Job creators can select the desired proposal. Users can both create jobs and bid on available jobs.<br /></p>
                 <div id="theBest" className="Job-Container">
                     <div className='row'>
                         {jobs}

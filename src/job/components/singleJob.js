@@ -147,10 +147,12 @@ class SingleJob extends Component {
         const jobBids = this.props.bids.filter(bid => bid.jobId == this.state.job._id)
         const openBids = jobBids.filter(bid => bid.status == 1)
         const closeBids = jobBids.filter(bid => bid.status == 2)
-        const jobStats = <table class="table table-striped">
-            <tr scope="col">Proposals: {bidsCount}</tr>
-            <tr>Open Negotiations: {openBids.length}</tr>
-            <tr>Closed Proposals: {closeBids.length}</tr>
+        const jobStats = <table className="table table-striped">
+            <tbody>
+                <tr scope="col"><td>{"Proposals: " + bidsCount}</td></tr>
+                <tr><td>{"Open Negotiations: " + openBids.length}</td></tr>
+                <tr><td>{"Closed Proposals: " + closeBids.length}</td></tr>
+            </tbody>
         </table>
         return (<div>
             <h1 className='title-section'> Job Details </h1>
