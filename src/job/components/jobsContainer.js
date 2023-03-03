@@ -10,7 +10,7 @@ export default class JobsContainer extends Component {
         }
     }
     render() {
-        let jobs = <h2>No Jobs</h2>
+        let jobs = <h2 className='mx-auto'><br />No Jobs or Waiting for resource</h2>
         if (this.props.jobs.length > 0) {
             if (this.props.user) {
                 const notJobs = this.props.jobs.filter(job => job.creator != this.props.user._id)

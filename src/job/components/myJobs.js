@@ -83,7 +83,7 @@ class MyJobs extends Component {
                     case 2:
                         jobSt = "canceled";
                 }
-                return <div class="col-sm-6"><div className="card" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} />            Job Status: {jobSt}
+                return <div class="col-sm-6" key={index}><div className="card" key={index}><Job title={job.title} type={job.type} description={job.description} key={index} />            Job Status: {jobSt}
                     <Link to={{ pathname: `/jobs/${job._id}`, state: { jobId: job._id } }}>Go to Job's Page</Link></div ></div>
             });
         }
